@@ -1,4 +1,4 @@
-# Task Server Metadata Release System
+# Google Sheets Release Management System
 
 This repository documents a legacy system designed to manage software release metadata for cloud-based infrastructure across multiple environments (staging, production). It includes metadata-driven upgrade logic, dual-key approval, rollback support, and a transition path to GitOps.
 
