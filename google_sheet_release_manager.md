@@ -35,20 +35,33 @@ Key goals included:
 This document (see [here](https://docs.google.com/spreadsheets/d/1EbljChZRlw6sobgAGGOX2SMOqvOGgYL6eZtTIIjfGVM/edit?gid=0#gid=0) for an example) consisted of three main sheets:
 
 
-#### a.`ReleaseChannels`
+#### a. `ReleaseChannels`
 
 - **Fields**:
-  - `ServerName`
-  - `currentReleaseChannel`
-  - `desiredReleaseChannel`
-  - `lastUpdateTime`
+  - `ReleaseChannel`
+  - `desiredVersionA`
+  - `desiredVersionB`
+  - `MaintenanceWindow`
+  - `Enabled`
   - `Comments`
 - **Functionality**:
-  - Tracked current vs. desired state.
-  - Allowed safe, centralized updates via metadata propagation.
+  - Displayed current release channels, associated software/image versions.
   - Dual-key system: SREs updated `desiredVersionA`, Release Managers updated `desiredVersionB`. Both had to match to trigger rollouts.
     
-#### b.`MaintenanceWindow`
+#### b. `MaintenanceWindow`
+
+- **Fields**:
+  - `MaintenanceWindow`
+  - `MaintenanceDays`
+  - `StartTime`
+  - `Duration`
+  - `Comments`
+- **Functionality**:
+  - Listed maintenance windows, approved maintenance days and times.
+  - Release Channels were mapped to MaintenanceWindow (1-1 mapping).
+  - Software on release channel could not be updated outside of its maintenance window.
+
+#### c. `ServerTagAssignment`
 
 - **Fields**:
   - `ServerName`
@@ -57,22 +70,8 @@ This document (see [here](https://docs.google.com/spreadsheets/d/1EbljChZRlw6sob
   - `lastUpdateTime`
   - `Comments`
 - **Functionality**:
-  - Tracked current vs. desired state.
-  - Allowed safe, centralized updates via metadata propagation.
-  - Dual-key system: SREs updated `desiredVersionA`, Release Managers updated `desiredVersionB`. Both had to match to trigger rollouts.
-
-#### c.`ServerTagAssignment`
-
-- **Fields**:
-  - `ServerName`
-  - `currentReleaseChannel`
-  - `desiredReleaseChannel`
-  - `lastUpdateTime`
-  - `Comments`
-- **Functionality**:
-  - Tracked current vs. desired state.
-  - Allowed safe, centralized updates via metadata propagation.
-  - Dual-key system: SREs updated `desiredVersionA`, Release Managers updated `desiredVersionB`. Both had to match to trigger rollouts.
+  - Tracked current vs. desired release channel metadat state.
+  - Allowed safe, centralized channel data updates via metadata propagation.
 
 ---
 
