@@ -8,6 +8,11 @@ This document outlines the design, implementation, and lifecycle of a homegrown 
 
 ## Problem Statement
 
+The DevOps team needed to:
+
+- Offload some of our growing workload.
+- Provide a way for SRE to update servers without needing to learn DevOps or require access to DevOps tools/repositories
+
 The SRE team needed a scalable, secure, and auditable way to manage:
 
 - Which software release version each server was on.
@@ -24,9 +29,40 @@ Key goals included:
 
 ## Core Components
 
-### 1. ServerTagAssignment Sheet (Google Sheets)
+### 1. ReleaseChannel Document (Google Sheets)
+**Purpose**: Source of truth for release channel assignment and control.
 
-- **Purpose**: Source of truth for release channel assignment and control.
+This document (see [here](https://docs.google.com/spreadsheets/d/1EbljChZRlw6sobgAGGOX2SMOqvOGgYL6eZtTIIjfGVM/edit?gid=0#gid=0) for an example) consisted of three main sheets:
+
+
+#### a.`ReleaseChannels`
+
+- **Fields**:
+  - `ServerName`
+  - `currentReleaseChannel`
+  - `desiredReleaseChannel`
+  - `lastUpdateTime`
+  - `Comments`
+- **Functionality**:
+  - Tracked current vs. desired state.
+  - Allowed safe, centralized updates via metadata propagation.
+  - Dual-key system: SREs updated `desiredVersionA`, Release Managers updated `desiredVersionB`. Both had to match to trigger rollouts.
+    
+#### b.`MaintenanceWindow`
+
+- **Fields**:
+  - `ServerName`
+  - `currentReleaseChannel`
+  - `desiredReleaseChannel`
+  - `lastUpdateTime`
+  - `Comments`
+- **Functionality**:
+  - Tracked current vs. desired state.
+  - Allowed safe, centralized updates via metadata propagation.
+  - Dual-key system: SREs updated `desiredVersionA`, Release Managers updated `desiredVersionB`. Both had to match to trigger rollouts.
+
+#### c.`ServerTagAssignment`
+
 - **Fields**:
   - `ServerName`
   - `currentReleaseChannel`
